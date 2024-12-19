@@ -1,7 +1,23 @@
 .contactList {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     gap: 3px;
     padding: 10px;
     list-style-type: none;
+}
+li{
+    list-style-type: none;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+   
+}
+button{
+    width: 50px;
 }

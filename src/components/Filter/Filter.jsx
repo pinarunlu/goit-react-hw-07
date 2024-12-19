@@ -1,6 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setNameFilter } from '../../redux/filtersSlice'; // doğru import
+import styles from './Filter.module.css';
+
 
 const Filter = () => {
   const dispatch = useDispatch();
@@ -11,9 +13,9 @@ const Filter = () => {
   };
 
   return (
-    <div>
+    <div className={styles.filterBox}>
       <p>Find Contacts by name</p>
-      <input
+      <input className={styles.filterInput}
         type="text"
         value={filter} // Mevcut filtre değeri input'un değerine atanıyor
         onChange={handleFilterChange} // input değiştikçe filtreyi güncelliyoruz

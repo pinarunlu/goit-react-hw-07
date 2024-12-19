@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact, fetchContacts } from '../../redux/contactsOps'; // operations'tan eylemler
+import { useDispatch} from 'react-redux';
+import { addContact } from '../../redux/contactsOps'; // operations'tan eylemler
 import styles from './ContactForm.module.css';
+
+
 
 const ContactForm = ({ contactToEdit }) => {
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const ContactForm = ({ contactToEdit }) => {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
+       <div className={styles.inputText}>
       <label>Name</label>
       <input
         type="text"
@@ -39,7 +42,9 @@ const ContactForm = ({ contactToEdit }) => {
         onChange={(e) => setName(e.target.value)}
         placeholder="Enter name"
         required
-      />
+        />
+        </div>
+      <div className={styles.inputNumber}>
       <label>Phone</label>
       <input
         type="tel"
@@ -47,8 +52,9 @@ const ContactForm = ({ contactToEdit }) => {
         onChange={(e) => setPhone(e.target.value)}
         placeholder="Enter phone"
         required
-      />
-      <button type="submit">{contactToEdit ? 'Update' : 'Add'}</button>
+        />
+        </div>
+      <button className={styles.submit} type="submit">{contactToEdit ? 'Update' : 'Add Contact'}</button>
     </form>
   );
 };
