@@ -1,7 +1,7 @@
-// src/redux/contactsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import { createSelector } from 'reselect'; // reselect kütüphanesini import ediyoruz
 import { selectNameFilter } from './filtersSlice'; // filtersSlice'dan selectNameFilter'ı import ediyoruz
+import { fetchContacts, addContact, deleteContact } from './contactsOps'; // doğru importları yapıyoruz
 
 const initialState = {
   contacts: [],
@@ -14,11 +14,11 @@ const contactsSlice = createSlice({
   initialState,
   reducers: {
     // Add contact
-    addContact(state, action) {
+    addContactDirect(state, action) {
       state.contacts.push(action.payload);
     },
     // Delete contact
-    deleteContact(state, action) {
+    deleteContactDirect(state, action) {
       state.contacts = state.contacts.filter(contact => contact.id !== action.payload);
     },
     // Set loading state
@@ -31,25 +31,30 @@ const contactsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Burada backend ile ilgili işlemler yapılacak
     builder
-      .addCase('contacts/fetchContacts/pending', (state) => {
+      .addCase(fetchContacts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase('contacts/fetchContacts/fulfilled', (state, action) => {
+      .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.contacts = action.payload;
       })
-      .addCase('contacts/fetchContacts/rejected', (state, action) => {
+      .addCase(fetchContacts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(addContact.fulfilled, (state, action) => {
+        state.contacts.push(action.payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.contacts = state.contacts.filter(contact => contact.id !== action.payload.id);
       });
   },
 });
 
 // Reducer ve action'ları dışa aktar
-export const { addContact, deleteContact, setLoading, setError } = contactsSlice.actions;
+export const { addContactDirect, deleteContactDirect, setLoading, setError } = contactsSlice.actions;
 
 // contactsReducer'ı dışa aktar
 export const contactsReducer = contactsSlice.reducer;

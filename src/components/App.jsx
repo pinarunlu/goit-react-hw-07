@@ -3,10 +3,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from '../redux/contactsOps'; // Operations dosyasını import ediyoruz
 import { selectFilteredContacts } from '../redux/contactsSlice'; // Filtrelenmiş kişiler için selector
-import { setNameFilter } from '../redux/filtersSlice'; // Filtreyi güncellemek için slice'ı import ediyoruz
+
 import ContactForm from '../components/ContactForm/ContactForm';
 import ContactList from '../components/ContactList/ContactList';
 import Filter from '../components/Filter/Filter'; // Filter bileşenini import ediyoruz
+
 
 function App() {
   const dispatch = useDispatch();
