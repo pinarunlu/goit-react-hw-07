@@ -1,25 +1,31 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsOps'; // Silme işlemi için import
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteContact } from '../../redux/contactsOps';
 import { selectContacts } from '../../redux/contactsSlice';
+import { selectNameFilter } from '../../redux/filtersSlice'; // Filtre seçici
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts); // Redux'tan kontakları alıyoruz
+  const contacts = useSelector(selectContacts);
+  const nameFilter = useSelector(selectNameFilter); // Redux'tan filtre değeri alınıyor
+
+  // Filtreleme işlemi
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(nameFilter.toLowerCase())
+  );
 
   const handleDelete = (id) => {
-    dispatch(deleteContact(id)); // Kişi silme işlemi
+    dispatch(deleteContact(id));
   };
 
   return (
     <div>
       <h2>Contact List</h2>
-      {contacts.length === 0 ? (
+      {filteredContacts.length === 0 ? (
         <p>No contacts available</p>
       ) : (
         <ul>
-          {contacts.map((contact) => (
+          {filteredContacts.map((contact) => (
             <li key={contact.id}>
               <p><strong>{contact.name}</strong></p>
               <p>Phone: {contact.number}</p>
